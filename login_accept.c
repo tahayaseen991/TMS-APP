@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-int main() {
+void login_accept() {
     printf("\nWelcome to TMS System!\n");
-    return 0;
 }
