@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
+#include "login_accept.c"   // or better: use header file
+#include "login_deny.c"
 
 int main() {
     char username[50];
@@ -19,10 +20,10 @@ int main() {
     // Check credentials
     if (strcmp(username, "admin") == 0 && strcmp(password, "admin") == 0) {
         printf("\nLogin Successful!\n");
-        system("./login_accept");   // Calls accept module
+        login_accept();   // call function instead of main
     } else {
         printf("\nLogin Failed!\n");
-        system("./login_deny");     // Calls deny module
+        login_deny();     // call function instead of main
     }
 
     return 0;
