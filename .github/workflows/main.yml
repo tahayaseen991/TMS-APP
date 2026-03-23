@@ -1,0 +1,31 @@
+name: TMS Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install GCC
+      run: sudo apt-get update && sudo apt-get install -y build-essential
+
+    # Compile main files (root)
+    - name: Compile Main Files
+      run: |
+        gcc main_screen.c -o main_screen
+        gcc login_accept.c -o login_accept
+        gcc login_deny.c -o login_deny
+
+    # Compile test file (inside test-cases folder)
+    - name: Compile Tests
+      run: gcc test-cases/login_tests.c -o login_tests
+
+    # Run tests
+    - name: Run Tests
+      run: ./login_tests
