@@ -9,23 +9,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Step 1: Checkout code
     - name: Checkout code
       uses: actions/checkout@v3
 
+    # Step 2: Install GCC
     - name: Install GCC
       run: sudo apt-get update && sudo apt-get install -y build-essential
 
-    # Compile main files (root)
-    - name: Compile Main Files
-      run: |
-        gcc main_screen.c -o main_screen
-        gcc login_accept.c -o login_accept
-        gcc login_deny.c -o login_deny
+    # Step 3: Compile main_screen only
+    - name: Compile Main File
+      run: gcc main_screen.c -o main_screen
 
-    # Compile test file (inside test-cases folder)
+    # Step 4: Compile test file
     - name: Compile Tests
       run: gcc test-cases/login_tests.c -o login_tests
 
-    # Run tests
+    # Step 5: Run tests
     - name: Run Tests
       run: ./login_tests
