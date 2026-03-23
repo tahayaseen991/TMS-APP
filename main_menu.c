@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Add these as extern functions
+extern void view_shipments();
+extern void add_shipments();
+
 void main_menu() {
     int choice;
 
@@ -12,18 +16,11 @@ void main_menu() {
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
-        switch (choice) {
-            case 1:
-                printf("View Shipments selected.\n");
-                break;
-            case 2:
-                printf("Add Shipment selected.\n");
-                break;
-            case 3:
-                printf("Exiting program. Goodbye!\n");
-                exit(0);
-            default:
-                printf("Invalid choice. Try again.\n");
+        switch(choice) {
+            case 1: view_shipments(); break;
+            case 2: add_shipments(); break;
+            case 3: exit(0);
+            default: printf("Invalid choice\n");
         }
     }
 }
