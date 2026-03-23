@@ -3,28 +3,34 @@ name: TMS Pipeline
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout code
-    - name: Checkout code
-      uses: actions/checkout@v3
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # Step 2: Install GCC
-    - name: Install GCC
-      run: sudo apt-get update && sudo apt-get install -y build-essential
+      # Step 2: Install GCC
+      - name: Install GCC
+        run: sudo apt-get update && sudo apt-get install -y build-essential
 
-    # Step 3: Compile main_screen only
-    - name: Compile Main File
-      run: gcc main_screen.c -o main_screen
+      # Step 3: Compile main_screen.c (includes login_accept and login_deny functions)
+      - name: Compile Main Program
+        run: gcc main_screen.c -o main_screen
 
-    # Step 4: Compile test file
-    - name: Compile Tests
-      run: gcc test-cases/login_tests.c -o login_tests
+      # Step 4: Compile main_menu.c (optional, just to check separate compilation)
+      - name: Compile Main Menu
+        run: gcc main_menu.c -o main_menu.o -c
 
-    # Step 5: Run tests
-    - name: Run Tests
-      run: ./login_tests
+      # Step 5: Compile test file
+      - name: Compile Test File
+        run: gcc test-cases/login_tests.c -o login_tests
+
+      # Step 6: Run tests (limit execution to 10 seconds to prevent infinite loops)
+      - name: Run Tests
+        run: timeout 10 ./login_tests
