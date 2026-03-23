@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-int main() {
+void login_deny() {
     printf("\nAccess Denied!\n");
-    return 0;
 }
